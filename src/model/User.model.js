@@ -7,7 +7,10 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String
-    }
+    },
+    profile:{
+      type:String
+    },
   email: {
     type: String,
     required: true,
@@ -20,8 +23,7 @@ const userSchema = new mongoose.Schema({
 
         // Check if email already exists
         const existingUser = await mongoose.models.User.findOne({
-          email,
-          _id: { $ne: this._id }, // Ignore current document during update
+          email
         });
 
         return !existingUser;
@@ -39,3 +41,9 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps:true
 });
+
+
+const User = mongoose.model("User", userSchema);
+
+// Export model
+export default User;
